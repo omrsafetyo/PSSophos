@@ -74,9 +74,9 @@ Get-SophosEndpoint -TenantId $Tenant.id -TenantApiHost $Tenant.ApiHost -AccessTo
 Get-SophosEndpoint -TenantId $Tenant.id -TenantApiHost $Tenant.ApiHost -AccessToken $AccessToken -LastSeenAfter '01/01/2020'
 
 # Last seen more than 30 days ago
-Get-SophosEndpoint -TenantId $Tenant.id -TenantApiHost $Tenant.ApiHost -AccessToken $AccessToken -LastSeenBefore -P30D
+Get-SophosEndpoint -TenantId $Tenant.id -TenantApiHost $Tenant.ApiHost -AccessToken $AccessToken -LastSeenBefore "-P30D"
 ```
-_More information for specific filtering for lastSeenBefore/lastSeenAfter can be found on Sophos documentation(https://developer.sophos.com/docs/endpoint-and-server/1/routes/endpoints/get)_
+_More information for specific filtering for lastSeenBefore/lastSeenAfter can be found on Sophos documentation(https://developer.sophos.com/docs/endpoint-and-server/1/routes/endpoints/get).  These functions try to convert the input to these parameters to a [datetime], and if that doesn't work, it passes it as a string, and only certain string value formats are available via the API._
 
 __List endpoints with suspicious health status__
 ```
@@ -95,3 +95,8 @@ Invoke-SophosEndpointScan -TenantId $Tenant.id -TenantApiHost $Tenant.ApiHost -A
 
 Remove-SophosEndpoint -TenantId $Tenant.id -TenantApiHost $Tenant.ApiHost -AccessToken $AccessToken -EndpointId 4296be4d-55d9-4f1e-8f7a-e6797336742f -DisableTamperProtect $True
 ```
+
+#### This module is currently Beta ####
+I started writing this module on 4/20/2020, and published it on 4/22/2020.  I will try to update this module if/when more functionality becomes available via the API (functionality is currently pretty limited, and this module currently covers most of the functionality).  I will also be updating the help documentation which currently is only available via the built-in introspection. 
+
+I have tested all or nearly all of the functionality (scans/update checks excluded at the moment - but those are really simply calls, so no reason to suspect they don't).  Feel free to contribute or report bugs!
